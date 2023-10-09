@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// add model for transaction with fields:
+// id, year, month, description, amount, categorie, createdAt, updatedAt
+// add relation to categorie. a transaction can only have one categorie
+model Transaction {
+  id              String     @id @default(uuid())
+  transactionDate String
+  year            Int
+  month           Int
+  description     String
+  amount          Float
+  categorie       Category   @relation(fields: [categorieId], references: [id])
+  categorieId     String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+// add model for categorie with fields:
+// name, keywords (array of strings), transactions
+model Category {
+  id           String        @id @default(uuid())
+  name         String        @db.VarChar(255)
+  keywords     String
+  groupe      String
+  color        String
+  transactions Transaction[]
+}

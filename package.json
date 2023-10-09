@@ -1,0 +1,32 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "dev:prod": "nuxt dev --dotenv .env.prod",
+    "generate": "nuxt generate --dotenv .env.prod",
+    "generate:dev": "nuxt generate --dotenv .env",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "nuxt": "^3.7.0",
+    "prisma": "^5.2.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "@prisma/client": "^5.2.0",
+    "chart.js": "^4.4.0",
+    "papaparse": "^5.4.1",
+    "pinia": "^2.1.6",
+    "primeflex": "^3.3.1",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.32.2",
+    "slugify": "^1.6.6"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}

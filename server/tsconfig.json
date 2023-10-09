@@ -1,0 +1,6 @@
+{
+  "extends": "../.nuxt/tsconfig.server.json",
+  "exclude": [
+    "routes/create/transaction.js" // exclude the problematic file from compilation
+  ]
+}
