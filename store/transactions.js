@@ -10,7 +10,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
         const currentYearSortedTransactions = reactive({});
     
         async function getAllTransactions (params) {
-            currentYearTransactions.value =  await fetch('/read/transactions', {
+            currentYearTransactions.value =  await fetch('api/read/transactions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
     
         async function updateTransaction (transaction) {
             // edit transaction
-            await fetch(`/update/transaction`, {
+            await fetch(`api/update/transaction`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
          */
         async function sortYearTransactionsByCategory () {
             let sortedTransactions = {}
-            const categories = await fetch(`/read/category`)
+            const categories = await fetch(`api/read/category`)
             .then(response => response.json())
             .then(data => data)
             .catch(error => {

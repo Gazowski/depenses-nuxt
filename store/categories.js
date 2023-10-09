@@ -3,7 +3,7 @@ export const useCategoriesStore = defineStore('categories', () => {
 
 
       async function getAllCategories () {
-        categories.value = await fetch(`/read/category`)
+        categories.value = await fetch(`api/read/category`)
         .then(response => response.json())
         .then(data => data)
         .catch(error => {
@@ -15,7 +15,7 @@ export const useCategoriesStore = defineStore('categories', () => {
 
       async function updateCategory (category) {
         // edit category
-        await fetch(`/update/category`, {
+        await fetch(`api/update/category`, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
