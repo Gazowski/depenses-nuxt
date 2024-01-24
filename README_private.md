@@ -1,5 +1,9 @@
 this is a web app to overview personal finance.
  ## TODO
+- *****************************************************
+    voir  TRANSACTIONS.JS , appel a la base de données non cohérente
+
+- *****************************************************
 - [ ] add a color for categories (DB)
 - [ ] add a type for categories (DB)
 - [ ] add a button to delete all transactions

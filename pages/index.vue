@@ -13,7 +13,7 @@ const categoriesStore = useCategoriesStore()
 const { categories } = categoriesStore
 
 const transactionsStore = useTransactionsStore()
-const { currentYearSortedTransactions } = transactionsStore
+const { currentYearSortedTransactions, getAllTransactions } = transactionsStore
 
 
 const Manuvie = {
@@ -65,31 +65,33 @@ const chartData = computed(() => {
         console.log('datasetOverview', datasetOverview)
         let totalMonthExpenses = 0
         for(const categorie of categories.value) {
+            console.log('categorie', categorie)
             if(categorie.groupe == 'Revenu') {
                 // 'rgba(75, 192, 192, 1)',
                 //         'rgba(255, 99, 132, 1)'
                 if(index === 0) {
                     if(!month[categorie.id]) {
+
                         datasetOverview.datasets.push({
-                            label: categorie.name,
+                            label: categorie.categoryName,
                             data: [0],
                             fill: false,
                             borderColor: 'rgba(75, 192, 192, 1)',
                         })
                     } else {
                         datasetOverview.datasets.push({
-                            label: categorie.name,
-                            data: [month[categorie.id].total.toFixed(2)],
+                            label: categorie.categoryName,
+                            data: [parseInt(month[categorie.id].total).toFixed(2)],
                             fill: false,
                             borderColor: 'rgba(75, 192, 192, 1)',
                         })
                     }
                 } else {
-                    const datasetIndex = datasetOverview.datasets.findIndex((d) => d.label === categorie.name)
+                    const datasetIndex = datasetOverview.datasets.findIndex((d) => d.label === categorie.categoryName)
                     if(!month[categorie.id]) {
                         datasetOverview.datasets[datasetIndex].data.push(0)
                     } else {
-                        datasetOverview.datasets[datasetIndex].data.push(month[categorie.id].total.toFixed(2))
+                        datasetOverview.datasets[datasetIndex].data.push(parseInt(month[categorie.id].total).toFixed(2))
                     }
                 }
             }
@@ -98,27 +100,27 @@ const chartData = computed(() => {
                 if(index === 0) {
                     if(!month[categorie.id]) {
                         dataset.datasets.push({
-                            label: categorie.name,
+                            label: categorie.categoryName,
                             data: [0],
                             fill: false,
                             borderColor: categorie.color,
                         })
                     } else {
                         dataset.datasets.push({
-                            label: categorie.name,
-                            data: [month[categorie.id].total.toFixed(2) * -1],
+                            label: categorie.categoryName,
+                            data: [parseInt(month[categorie.id].total).toFixed(2) * -1],
                             fill: false,
                             borderColor: categorie.color,
                         })
-                        totalMonthExpenses += month[categorie.id].total.toFixed(2) * -1
+                        totalMonthExpenses += parseInt(month[categorie.id].total).toFixed(2) * -1
                     }
                 } else {
-                    const datasetIndex = dataset.datasets.findIndex((d) => d.label === categorie.name)
+                    const datasetIndex = dataset.datasets.findIndex((d) => d.label === categorie.categoryName)
                     if(!month[categorie.id]) {
                         dataset.datasets[datasetIndex].data.push(0)
                     } else {
-                        dataset.datasets[datasetIndex].data.push(month[categorie.id].total.toFixed(2) * -1)
-                        totalMonthExpenses += month[categorie.id].total.toFixed(2) * -1
+                        dataset.datasets[datasetIndex].data.push(parseInt(month[categorie.id].total).toFixed(2) * -1)
+                        totalMonthExpenses += parseInt(month[categorie.id].total).toFixed(2) * -1
                     }
                 }
 
@@ -298,7 +300,6 @@ const handleFileUpload = async (e) => {
         }
     });
 }
-
 
 
 // add a watcher on 

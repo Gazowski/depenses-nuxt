@@ -1,9 +1,10 @@
 export const useCategoriesStore = defineStore('categories', () => {
       const categories = reactive({});
+      const requestUri = 'http://localhost/depenses-api/api';
 
 
       async function getAllCategories () {
-        categories.value = await fetch(`api/read/category`)
+        categories.value = await fetch(`${requestUri}/categories`)
         .then(response => response.json())
         .then(data => data)
         .catch(error => {

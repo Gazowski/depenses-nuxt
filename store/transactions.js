@@ -8,16 +8,18 @@ export const useTransactionsStore = defineStore('transactions', () => {
         const currentYearTransactions = reactive({});
         const currentYearTransactionsByMonth = reactive({});
         const currentYearSortedTransactions = reactive({});
+        const requestUri = 'http://localhost/depenses-api/api';
     
         async function getAllTransactions (params) {
-            currentYearTransactions.value =  await fetch('api/read/transactions', {
-                method: 'POST',
+            let urlParams = '';
+            if (params?.year) {
+                urlParams = `/${params.year}`;
+            }
+            currentYearTransactions.value =  await fetch(`${requestUri}/transactions${urlParams}`, {
                 headers: {
+                    // api is a php api, so we need to send the data as form data
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    ...params
-                }),
             })
             .then(response => response.json())
             .then(data => data)
@@ -28,7 +30,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
     
         async function updateTransaction (transaction) {
             // edit transaction
-            await fetch(`api/update/transaction`, {
+            await fetch(`http://localhost/depenses-api/api/update/transaction`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -47,6 +49,10 @@ export const useTransactionsStore = defineStore('transactions', () => {
 
         function getTransactionsByMonth () {
             let sortedTransactions = {}
+            if (!currentYearTransactions.value) {
+                return;
+            }
+            console.log('currentYearTransactions',currentYearTransactions.value)
             for (const transaction of currentYearTransactions.value) {
                 const month = globalMonths()[transaction.month];
                 //check if currentYearTransactionsByMonth already has a key with the month
@@ -68,7 +74,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
          */
         async function sortYearTransactionsByCategory () {
             let sortedTransactions = {}
-            const categories = await fetch(`api/read/category`)
+            const categories = await fetch(`${requestUri}/categories`)
             .then(response => response.json())
             .then(data => data)
             .catch(error => {

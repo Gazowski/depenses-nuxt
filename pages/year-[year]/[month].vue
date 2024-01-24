@@ -43,7 +43,7 @@
     // it will be the total amount of in sortedTransactions where category.id === 'income'
     const totalIncome = computed(() => {
         const income = sortedTransactions.value.find((t) => t.category.id === 'income')
-        return income ? income.category.totalAmount : 0
+        return parseInt(income) ? parseInt(income.category.totalAmount) : 0
     })
 
     // add a computed for total expenses
@@ -51,7 +51,7 @@
     // 'groceries', 'reccurent', 'home', 'health' ,'leisure', 'transport', 'unknow'
     const totalExpenses = computed(() => {
         const expenses = sortedTransactions.value.filter((t) => ['groceries', 'reccurent', 'home', 'health' ,'leisure', 'unknow','loan'].includes(t.category.id))
-        return expenses.reduce((total, expense) => total + expense.category.totalAmount, 0)
+        return parseInt(expenses.reduce((total, expense) => total + expense.category.totalAmount, 0))
     })
 
     // add a ref for chart data to display total income and total expenses
@@ -315,7 +315,7 @@
                             <template #header>
                                <h2 class="flex justify-content-between gap-2">
                                 <span>{{ sortedTransaction.category.name }}</span>
-                                <span>{{ sortedTransaction.category.totalAmount.toFixed(2) }}&nbsp;$</span>
+                                <span>{{ parseInt(sortedTransaction.category.totalAmount).toFixed(2) }}&nbsp;$</span>
                                 </h2> 
                             </template>
                             <!-- column for date -->
@@ -323,7 +323,7 @@
                             <Column field="description" header="Description"></Column>
                             <Column field="amount" header="Amount" class="text-right">
                                 <template #body="slotProps">
-                                    {{ slotProps.data.amount.toFixed(2) }}&nbsp;$
+                                    {{ parseInt(slotProps.data.amount).toFixed(2) }}&nbsp;$
                                 </template>
                             </Column>
                             <Column field="id" header="Actions" class="text-center">
